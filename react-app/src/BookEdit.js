@@ -1,30 +1,28 @@
 import React, { Component } from 'react';
-import AppNavbar from './Navbar';
+//import AppNavbar from './Navbar';
 import {Link, withRouter} from 'react-router-dom';
 import {Button, Container, Form, FormGroup, Input, Label} from 'reactstrap';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
 
-class InventoryEdit extends Component {
-    emptyInventory = {
-        prodname: '',
-        qty: '',
-        price: '',
-        status: ''
+class BookEdit extends Component {
+    emptyBook = {
+        title: '',
+        author: ''
     };
 
     constructor(props) {
         super(props);
         this.state = {
-            item: this.emptyInventory
+            item: this.emptyBook
         }
     };
 
     async componentDidMount() {
         if (this.props.match.param.id !== 'new') {
-            const inventory = 
-                await (await fetch(`/api/inventory/${this.props.match.params.id}`)).json();
-                this.setState({item: inventory});
+            const book = 
+                await (await fetch(`/api/book/${this.props.match.params.id}`)).json();
+                this.setState({item: book});
         }
     }
 
@@ -41,7 +39,7 @@ class InventoryEdit extends Component {
         event.preventDefault();
         const {item} = this.state;
 
-        await fetch('/api/inventory', {
+        await fetch('/api/book', {
             method: (item._id) ? 'PUT' : 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -49,75 +47,46 @@ class InventoryEdit extends Component {
             },
             body: JSON.stringify(item),
         });
-        this.props.history.push('/inventories');
+        this.props.history.push('/books');
     }
 
     render() {
         const {item} = this.state;
         const title = 
             <h2 className='mt-3'>
-                {item._id ? 'Edit Inventory' : 'Add Inventory'}
+                {item._id ? 'Edit Book' : 'Add Book'}
             </h2>;
             return(
                 <div>
-                    <AppNavbar />
                     <Container>
                         {title}
                         <Form onSubmit={this.handleSubmit}>
                             <FormGroup>
                                 <Label 
-                                    for="prodname"
+                                    for="title"
                                     className='h5 mt-3'
-                                >Product Name</Label>
+                                >Title</Label>
                                 <Input 
                                     type='text'
-                                    name='prodname'
-                                    id='prodname'
-                                    value={item.prodname || ''}
+                                    name='title'
+                                    id='title'
+                                    value={item.title || ''}
                                     onChange={this.handleChange}
-                                    autoComplete='prodname'
+                                    autoComplete='title'
                                     />
                             </FormGroup>
                             <FormGroup>
                                 <Label 
-                                    for="qty"
+                                    for="author"
                                     className='h5 mt-3'
-                                >Quantity</Label>
+                                >Author</Label>
                                 <Input 
                                     type='text'
-                                    name='qty'
-                                    id='qty'
-                                    value={item.qty || ''}
+                                    name='author'
+                                    id='author'
+                                    value={item.author || ''}
                                     onChange={this.handleChange}
-                                    autoComplete='qty'
-                                    />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label 
-                                    for="price"
-                                    className='h5 mt-3'
-                                >Price</Label>
-                                <Input 
-                                    type='text'
-                                    name='price'
-                                    id='price'
-                                    value={item.price || ''}
-                                    onChange={this.handleChange}
-                                    autoComplete='price'
-                                    />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label 
-                                    for="status"
-                                    className='h5 mt-3'
-                                >Status</Label>
-                                <Input 
-                                    type='text'
-                                    name='status'
-                                    id='status'
-                                    value={item.status || ''}
-                                    onChange={this.handleChange}
-                                    autoComplete='status'
+                                    autoComplete='author'
                                     />
                             </FormGroup>
                             <FormGroup>
@@ -129,7 +98,7 @@ class InventoryEdit extends Component {
                                 <Button
                                     color="secondary"
                                     className='mt-3'
-                                    tag={Link} to="/inventories"
+                                    tag={Link} to="/books"
                                 >Cancel</Button>
                             </FormGroup>
                         </Form>
@@ -139,4 +108,4 @@ class InventoryEdit extends Component {
     }
 };
 
-export default withRouter(InventoryEdit);
+export default withRouter(BookEdit);
