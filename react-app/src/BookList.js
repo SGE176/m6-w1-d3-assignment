@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import AppNavbar from './Navbar';
 import {Link} from 'react-router-dom';
 import {Button, ButtonGroup, Container, Table} from 'reactstrap';
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -22,7 +21,7 @@ class BookList extends Component {
             .then(data => this.setState({books: data, isLoading: false}));
     }
 
-    removeInv = async (id) => {
+    removeBook = async (id) => {
         await fetch(`/api/book/${id}`, {
             method: 'DELETE',
             headers: {
@@ -61,7 +60,7 @@ class BookList extends Component {
                             size='sm'
                             color='danger'
                             tag={Link}
-                            onClike={() => this.removeInv(book._id)}
+                            onClick={() => this.removeInv(book._id)}
                         >Delete
                         </Button>
                     </ButtonGroup>
