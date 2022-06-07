@@ -60,7 +60,7 @@ class BookList extends Component {
                             size='sm'
                             color='danger'
                             tag={Link}
-                            onClick={() => this.removeInv(book._id)}
+                            onClick={() => this.removeBook(book._id)}
                         >Delete
                         </Button>
                     </ButtonGroup>
